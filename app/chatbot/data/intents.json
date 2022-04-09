@@ -14,11 +14,7 @@
         "responses": ["I'm doing great! Thank you", "So far so good! Thanks.", "I'm doing well! Thank you.", "I'm doing great!"],
         "context":[""]
     },
-    { "tag": "what_can_you_do",
-        "patterns": ["What can you do?", "What do you do?", "How do you work?"], 
-        "responses": ["I am good at small talk and can try to diagnose a couple of common disorders.", "I can do some small talk and offer support for mental health!"],
-        "context":[""]
-    },
+    
     { "tag": "symptom_sad", 
         "patterns": ["I have been feeling kind of sad lately, and I'm not sure what it means.", "I've been feeling sad lately", "I feel sad", "I feel depressed", "I've been feeling sad"], 
         "responses": ["I can help you talk about that. Can you please tell me a little bit more?", "I'm sorry to hear that. Maybe you can go into that a little bit more?"],
@@ -209,6 +205,21 @@
     {"tag": "climate change",
         "patterns": ["can you tell me about global warming", "what do you know about global warming", "can you tell me about climate change", "what do you know about climate change", "have you heard about the icebergs melting"],
         "responses": ["Climate change is a lie. Please ask me to get to know you, or tell me a mental health symptom you are experiencing"],
+        "context": [""]
+    },
+    {"tag": "wiki_dep",
+        "patterns": ["what is depression", "What is depression", "can you tell me about depression", "what do you know about depression", "have you heard about depression"],
+        "responses": ["Let me get that info from Wikipedia"],
+        "context": [""]
+    },
+    {"tag": "wiki_anx",
+        "patterns": ["what is anxiety", "What is anxiety", "can you tell me about anxiety", "what do you know about anxiety", "have you heard about anxiety"],
+        "responses": ["Let me get that info from Wikipedia"],
+        "context": [""]
+    },
+    {"tag": "wiki_des",
+        "patterns": ["what is despair", "What is despair", "can you tell me about despair", "what do you know about despair", "have you heard about despair"],
+        "responses": ["Let me get that info from Wikipedia"],
         "context": [""]
     }
 ]}

@@ -9,20 +9,40 @@ import json
 import random
 import tkinter                                  # used to build user interface
 from tkinter import *
+from googletrans import Translator
 import spacy
 from spacy import displacy
 
+translator = Translator()
 
 # load the trained model and pickle files
-intents = json.loads(open('app/chatbot/data/intents.json').read())
-model = load_model('app/chatbot/models/trained_chatbot_model.h5')
-words = pickle.load(open('app/chatbot/data/words.pkl', 'rb'))
-classes = pickle.load(open('app/chatbot/data/classes.pkl', 'rb'))
+intents = json.loads(open('C://Users/Pavni/Desktop/School/COSC-310-Individual-Project/COSC-310-Individual-Project/app/chatbot/data/intents.json').read())
+model = load_model('C://Users/Pavni/Desktop/School/COSC-310-Individual-Project/COSC-310-Individual-Project/app/chatbot/models/trained_chatbot_model.h5')
+words = pickle.load(open('C://Users/Pavni/Desktop/School/COSC-310-Individual-Project/COSC-310-Individual-Project/app/chatbot/data/words.pkl', 'rb'))
+classes = pickle.load(open('C://Users/Pavni/Desktop/School/COSC-310-Individual-Project/COSC-310-Individual-Project/app/chatbot/data/classes.pkl', 'rb'))
 
 
 # spacy 'brain'
 nlp = spacy.load('en_core_web_sm')
 nlp.add_pipe('merge_entities')
+
+# Wikipedia API
+import wikipediaapi
+wikipedia = wikipediaapi.Wikipedia('en')
+
+# Wikipedia search
+def wiki(word):
+    if "depression" in word:
+        print("depression")
+        page = wikipedia.page("major depressive disorder")
+        return page.summary
+    page = wikipedia.page(word)
+    return  page.summary
+
+# translates sentence to english
+def translate(sentence):
+    trans = translator.translate(sentence).text
+    return trans
 
 
 # POS Mapper Function (used to ensure POS compatibility with lemmatizer)
@@ -113,14 +133,20 @@ def chatbot_response(text):
 def send():
     msg = EntryBox.get("1.0",'end-1c').strip()
     EntryBox.delete("0.0",END)
-    
+    msg = translate(msg)
+
     if msg != '':
         ChatLog.config(state=NORMAL)
         ChatLog.insert(END, "You: " + msg + '\n\n')
         ChatLog.config(foreground="#442265", font=("Verdana", 12 ))
+        msg_list = msg.split()
 
         res = chatbot_response(msg)
-        ChatLog.insert(END, "Psychiatrist: " + res + '\n\n')
+        # if Wikipedia, then alter response to add the page summary
+        if "Wikipedia" in res:
+            ChatLog.insert(END, "Psychiatrist: " + res + ": "+ wiki(msg_list[-1]) + '\n\n')
+        else:
+            ChatLog.insert(END, "Psychiatrist: " + res + '\n\n')
 
         ChatLog.config(state=DISABLED)
         ChatLog.yview(END)
