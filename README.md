@@ -10,7 +10,7 @@
 
 `pip install googletrans`
 
-`pip install wikipediaapi`
+`pip install Wikipedia-API`
 
 #### Install Dependencies
 
